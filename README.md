@@ -1,22 +1,25 @@
 # AWS S3 GPG Backup
 
+[Dockerhub](https://hub.docker.com/r/jaynewstrom/aws-s3-gpg-backup)
+
 ## Usage
-Before running the container, you'll need to setup a GPG public key, an AWS user, and an S3 bucket. 
+Before running the container, you'll need to setup a GPG public key, an AWS user, and an S3 bucket.
 
 ```shell script
 docker run --rm -it \
   -v $(pwd):/data:ro \
   -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
   -v ~/.aws:/root/.aws:ro \
-  jaynewstrom/aws-s3-gpg-backup
+  jaynewstrom/aws-s3-gpg-backup your-bucket-name
 ```
 
+### Advanced Usage
+
+- Bucket name may include a folder to nest within. `jaynewstrom-backup/home`
+
 ## Build
- - Build for the current architecture only: `docker build -t aws-s3-gpg-backup .`
- - Build for multiple architectures: `docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t aws-s3-gpg-backup .`
- 
-## TODO
- - Document restoration/etc
+ - Build for the current architecture only: `docker build -t jaynewstrom/aws-s3-gpg-backup .`
+ - Build for multiple architectures: `docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t jaynewstrom/aws-s3-gpg-backup . --push`
 
 ## License
 
@@ -33,4 +36,3 @@ docker run --rm -it \
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
