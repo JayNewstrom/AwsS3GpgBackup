@@ -6,7 +6,7 @@ RUN apk add --update --no-cache --virtual .build-deps \
         python-dev \
         py-pip \
         build-base \
-    && pip install awscli==$AWSCLI_VERSION --upgrade --user \
+    && pip --no-cache-dir install awscli==$AWSCLI_VERSION --upgrade --user \
     && mv /root/.local/bin/* /usr/local/bin \
     && apk del .build-deps \
     && apk add --update --no-cache \
