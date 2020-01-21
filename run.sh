@@ -18,6 +18,6 @@ zip -r /zip/"$ZIP_FILENAME" /data/
 
 gpg --output "/gpg/$GPG_FILENAME" --encrypt --recipient-file "/recipient/$RECIPIENT_FILENAME" "/zip/$ZIP_FILENAME"
 
-aws s3 cp "/gpg/$GPG_FILENAME" "s3://$S3_BUCKET/$GPG_FILENAME" "$AWS_OPTIONS"
+aws s3 cp "/gpg/$GPG_FILENAME" "s3://$S3_BUCKET/$GPG_FILENAME" $AWS_OPTIONS
 
 rm "/gpg/$GPG_FILENAME" "/zip/$ZIP_FILENAME"

@@ -3,3 +3,5 @@
 
 # Explicitly add the things we need.
 !/run.sh
+!/crontab
+!/bootstrap.sh

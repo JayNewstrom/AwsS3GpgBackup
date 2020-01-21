@@ -21,6 +21,7 @@ docker run --rm -it \
   - `DATE`
 - Customize the GPG public key to read from with the `RECIPIENT_FILENAME` environment variable
 - Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable.
+- Run only once, without cron, via the environment variable `NO_CRON=true`
 
 ## Build
  - Build for the current architecture only: `docker build -t jaynewstrom/aws-s3-gpg-backup .`

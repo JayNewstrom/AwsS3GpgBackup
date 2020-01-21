@@ -1,0 +1,1 @@
+0 4 * * * /run.sh "$(cat /bucket_name.txt)"
