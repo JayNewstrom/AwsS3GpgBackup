@@ -16,6 +16,11 @@ docker run --rm -it \
 ### Advanced Usage
 
 - Bucket name may include a folder to nest within. `jaynewstrom-backup/home`
+- Customize the filename with the following environment variables:
+  - `FILENAME_PREFIX`
+  - `DATE`
+- Customize the GPG public key to read from with the `RECIPIENT_FILENAME` environment variable
+- Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable.
 
 ## Build
  - Build for the current architecture only: `docker build -t jaynewstrom/aws-s3-gpg-backup .`
