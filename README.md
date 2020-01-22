@@ -6,7 +6,7 @@
 Before running the container, you'll need to setup a GPG public key, an AWS user, and an S3 bucket.
 
 ```shell script
-docker run --rm -it \
+docker run --restart=always -d --name=backup \
   -v $(pwd):/data:ro \
   -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
   -v ~/.aws:/root/.aws:ro \
@@ -20,8 +20,18 @@ docker run --rm -it \
   - `FILENAME_PREFIX`
   - `DATE`
 - Customize the GPG public key to read from with the `RECIPIENT_FILENAME` environment variable
-- Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable.
+- Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable
 - Run only once, without cron, via the environment variable `NO_CRON=true`
+- Backup multiple folders by mounting multiple volumes into the data directory
+  - ```
+    docker run --restart=always -d --name=backup \
+      -v $(pwd)/one:/data/one:ro \
+      -v $(pwd)/two:/data/two:ro \
+      -v $(pwd)/three:/data/three:ro \
+      -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
+      -v ~/.aws:/root/.aws:ro \
+      jaynewstrom/aws-s3-gpg-backup your-bucket-name
+    ```
 
 ## Build
  - Build for the current architecture only: `docker build -t jaynewstrom/aws-s3-gpg-backup .`
