@@ -34,6 +34,17 @@ docker run --restart=always -d --name=backup \
       jaynewstrom/aws-s3-gpg-backup your-bucket-name
     ```
 
+## Restore
+In order to restore, first mount the private key into the container. The files will be restored into the restore volume.
+
+```shell script
+docker run --rm -it --name=restore \
+  -v $(pwd):/restore \
+  -v ~/.aws:/root/.aws:ro \
+  --entrypoint "./restore.sh" \
+  jaynewstrom/aws-s3-gpg-backup your-bucket-name file-to-restore.zip.gpg
+```
+
 ## Build
  - Build for the current architecture only: `docker build -t jaynewstrom/aws-s3-gpg-backup .`
  - Build for multiple architectures: `docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t jaynewstrom/aws-s3-gpg-backup . --push`

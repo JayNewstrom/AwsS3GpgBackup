@@ -5,3 +5,4 @@
 !/run.sh
 !/crontab
 !/bootstrap.sh
+!/restore.sh
