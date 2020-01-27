@@ -1,0 +1,33 @@
+name: Build and push to dockerhub
+
+on:
+  pull_request:
+    branches: master
+  push:
+    branches: master
+    tags:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+      - name: Run Buildx
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            -t jaynewstrom/aws-s3-gpg-backup .
+      - name: Push
+        run: |
+          echo "${DOCKER_HUB_PASSWORD}" | docker login --username jaynewstrom --password-stdin
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            -t jaynewstrom/aws-s3-gpg-backup . \
+            --push
+        env:
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        if: github.event_name == 'push'
