@@ -1,6 +1,11 @@
 #!/bin/sh
 
-./run.sh "$1"
+if [[ "$SKIP_INITIAL_RUN" == "true" ]]; then
+  echo "Skippping initial run."
+else
+  echo "Performing initial run."
+  ./run.sh "$1"
+fi
 
 if [[ "$NO_CRON" == "true" ]]; then
   echo "Skipping cron, all done."

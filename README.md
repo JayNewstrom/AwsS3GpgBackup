@@ -23,6 +23,8 @@ docker run --restart=always -d --name=backup \
 - Customize the GPG public key to read from with the `RECIPIENT_FILENAME` environment variable
 - Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable
 - Run only once, without cron, via the environment variable `NO_CRON=true`
+- Skip the initial run, only using cron, via the environment variable `SKIP_INITIAL_RUN=true`
+- Customize the cron schedule (frequency/time) by overwriting the file `/var/spool/cron/crontabs/root` via docker volume mounts
 - Backup multiple files/folders by mounting multiple volumes into the data directory
   - ```shell script
     docker run --restart=always -d --name=backup \
