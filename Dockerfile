@@ -1,16 +1,16 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
-ENV AWSCLI_VERSION "1.16.312"
+ENV AWSCLI_VERSION "1.18.103"
 
 RUN apk add --update --no-cache --virtual .build-deps \
-        python-dev \
+        python3-dev \
         py-pip \
         build-base \
     && pip --no-cache-dir install awscli==$AWSCLI_VERSION --upgrade --user \
     && mv /root/.local/bin/* /usr/local/bin \
     && apk del .build-deps \
     && apk add --update --no-cache \
-        python \
+        python3 \
         gnupg \
         zip \
     && rm -rf /var/cache/apk/* \
