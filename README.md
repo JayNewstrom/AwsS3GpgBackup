@@ -2,7 +2,7 @@
 [Dockerhub](https://hub.docker.com/r/jaynewstrom/aws-s3-gpg-backup)
 
 This container zips, encrypts, and uploads `/data` to Amazon S3.
-By default, it calls [run.sh](run.sh) when the container starts, and daily via a cron job. 
+By default, it calls [run.sh](run.sh) when the container starts. 
 
 ## Usage
 Before running the container, you'll need to setup a GPG public key, an AWS user, and an S3 bucket.
@@ -22,9 +22,9 @@ docker run --restart=always -d --name=backup \
   - `DATE`
 - Customize the GPG public key to read from with the `RECIPIENT_FILENAME` environment variable
 - Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable
-- Run only once, without cron, via the environment variable `NO_CRON=true`
-- Skip the initial run, only using cron, via the environment variable `SKIP_INITIAL_RUN=true`
-- Customize the cron schedule (frequency/time) by overwriting the file `/var/spool/cron/crontabs/root` via docker volume mounts
+- Skip the initial run via the environment variable `SKIP_INITIAL_RUN=true`
+- Run via cron by adding an environment variable
+  - `CRON=15 8 * * *`
 - Backup multiple files/folders by mounting multiple volumes into the data directory
   - ```shell script
     docker run --restart=always -d --name=backup \

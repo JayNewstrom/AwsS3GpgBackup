@@ -1,16 +1,16 @@
 #!/bin/sh
 
 if [[ "$SKIP_INITIAL_RUN" == "true" ]]; then
-  echo "Skippping initial run."
+  echo "Skipping initial run."
 else
   echo "Performing initial run."
   ./run.sh "$1"
 fi
 
-if [[ "$NO_CRON" == "true" ]]; then
-  echo "Skipping cron, all done."
-else
+if [[ "$CRON" ]]; then
   echo "Starting cron."
-  echo "$1" > bucket_name.txt
+  echo "$CRON /run.sh $1" > /var/spool/cron/crontabs/root
   crond -l 2 -f
+else
+  echo "Skipping cron, all done."
 fi

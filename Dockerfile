@@ -18,6 +18,5 @@ RUN apk add --update --no-cache --virtual .build-deps \
     && mkdir /gpg
 
 COPY run.sh bootstrap.sh restore.sh ./
-COPY crontab /var/spool/cron/crontabs/root
 
 ENTRYPOINT ["./bootstrap.sh"]
