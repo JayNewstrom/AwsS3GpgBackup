@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+if [[ "$CRON" ]]; then
+  echo "Starting cron."
+  echo "$CRON /run.sh" > /var/spool/cron/crontabs/root
+  crond -l 2 -f
+else
+  echo "Skipping cron, all done."
+fi

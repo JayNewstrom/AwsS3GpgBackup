@@ -12,7 +12,8 @@ docker run --restart=always -d --name=backup \
   -v $(pwd):/data:ro \
   -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
   -v ~/.aws:/root/.aws:ro \
-  jaynewstrom/aws-s3-gpg-backup your-bucket-name
+  -e BUCKET_NAME=your-bucket-name \
+  jaynewstrom/aws-s3-gpg-backup
 ```
 
 ### Advanced Usage
@@ -33,6 +34,7 @@ docker run --restart=always -d --name=backup \
       -v $(pwd)/three:/data/three:ro \
       -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
       -v ~/.aws:/root/.aws:ro \
+      -e BUCKET_NAME=your-bucket-name \
       jaynewstrom/aws-s3-gpg-backup your-bucket-name
     ```
 
@@ -44,7 +46,8 @@ docker run --rm -it --name=restore \
   -v $(pwd):/restore \
   -v ~/.aws:/root/.aws:ro \
   --entrypoint "./restore.sh" \
-  jaynewstrom/aws-s3-gpg-backup your-bucket-name file-to-restore.zip.gpg
+  -e BUCKET_NAME=your-bucket-name \
+  jaynewstrom/aws-s3-gpg-backup file-to-restore.zip.gpg
 ```
 
 ## Build

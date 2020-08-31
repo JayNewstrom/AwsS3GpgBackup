@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM crazymax/alpine-s6:3.12
 
 ENV AWSCLI_VERSION "1.18.103"
 
@@ -17,6 +17,6 @@ RUN apk add --update --no-cache --virtual .build-deps \
     && mkdir /zip \
     && mkdir /gpg
 
-COPY run.sh bootstrap.sh restore.sh ./
+COPY root/ /
 
-ENTRYPOINT ["./bootstrap.sh"]
+ENTRYPOINT ["/init"]

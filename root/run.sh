@@ -1,6 +1,6 @@
 #!/bin/sh
 
-S3_BUCKET=${1:?"Please specify the S3 Bucket."}
+S3_BUCKET=${BUCKET_NAME:?"Please specify the S3 Bucket."}
 
 # Configurable Paramaters - via environment variables.
 RECIPIENT_FILENAME=${RECIPIENT_FILENAME:-"recipient.asc"}
