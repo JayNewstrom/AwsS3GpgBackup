@@ -1,6 +1,6 @@
 FROM crazymax/alpine-s6:3.12
 
-ENV AWSCLI_VERSION "1.18.103"
+ENV AWSCLI_VERSION "1.18.198"
 
 RUN apk add --update --no-cache --virtual .build-deps \
         python3-dev \
@@ -18,5 +18,3 @@ RUN apk add --update --no-cache --virtual .build-deps \
     && mkdir /gpg
 
 COPY root/ /
-
-ENTRYPOINT ["/init"]
