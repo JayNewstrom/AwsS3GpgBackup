@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/with-contenv sh
 
 S3_BUCKET=${BUCKET_NAME:?"Please specify the S3 Bucket."}
 
@@ -7,6 +7,9 @@ RECIPIENT_FILENAME=${RECIPIENT_FILENAME:-"recipient.asc"}
 FILENAME_PREFIX=${FILENAME_PREFIX:-"backup-"}
 DATE=${DATE:-$(date +\%Y-\%m-\%d)}
 AWS_OPTIONS=${AWS_OPTIONS:-""}
+export GNUPGHOME=${GNUPGHOME:-"/app/.gnupg"}
+export AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-"/config/.aws/credentials"}
+export AWS_CONFIG_FILE=${AWS_CONFIG_FILE:-"/config/.aws/config"}
 
 # Fail Fast
 set -o errexit

@@ -2,16 +2,18 @@
 [Dockerhub](https://hub.docker.com/r/jaynewstrom/aws-s3-gpg-backup)
 
 This container zips, encrypts, and uploads `/data` to Amazon S3.
-By default, it calls [run.sh](run.sh) when the container starts. 
+By default, it calls [run.sh](root/app/run.sh) when the container starts. 
 
 ## Usage
 Before running the container, you'll need to setup a GPG public key, an AWS user, and an S3 bucket.
 
 ```shell script
 docker run --restart=always -d --name=backup \
+  -e "PUID=1000" \
+  -e "PGID=1000" \
   -v $(pwd):/data:ro \
   -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
-  -v ~/.aws:/root/.aws:ro \
+  -v ~/.aws:/config/.aws:ro \
   -e BUCKET_NAME=your-bucket-name \
   jaynewstrom/aws-s3-gpg-backup
 ```
@@ -29,13 +31,15 @@ docker run --restart=always -d --name=backup \
 - Backup multiple files/folders by mounting multiple volumes into the data directory
   - ```shell script
     docker run --restart=always -d --name=backup \
+      -e "PUID=1000" \
+      -e "PGID=1000" \
       -v $(pwd)/one:/data/one:ro \
       -v $(pwd)/two:/data/two:ro \
       -v $(pwd)/three:/data/three:ro \
       -v /path_to_recipient/recipient.asc:/recipient/recipient.asc:ro \
-      -v ~/.aws:/root/.aws:ro \
+      -v ~/.aws:/config/.aws:ro \
       -e BUCKET_NAME=your-bucket-name \
-      jaynewstrom/aws-s3-gpg-backup your-bucket-name
+      jaynewstrom/aws-s3-gpg-backup
     ```
 
 ## Restore
@@ -43,9 +47,11 @@ In order to restore, first mount the private key into the container. The files w
 
 ```shell script
 docker run --rm -it --name=restore \
+  -e "PUID=1000" \
+  -e "PGID=1000" \
   -v $(pwd):/restore \
-  -v ~/.aws:/root/.aws:ro \
-  --entrypoint "./restore.sh" \
+  -v ~/.aws:/config/.aws:ro \
+  --entrypoint "/app/restore.sh" \
   -e BUCKET_NAME=your-bucket-name \
   jaynewstrom/aws-s3-gpg-backup file-to-restore.zip.gpg
 ```
