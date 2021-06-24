@@ -26,6 +26,9 @@ docker run --restart=always -d --name=backup \
 - Customize the GPG public key to read from with the `RECIPIENT_FILENAME` environment variable
 - Customize the `aws s3 cp` options via the `AWS_OPTIONS` environment variable
 - Skip the initial run via the environment variable `SKIP_INITIAL_RUN=true`
+- Configure compression type via `COMPRESSION_TYPE`:
+  - `zip` - default
+  - `tar.gz`
 - Run via cron by adding an environment variable
   - `CRON=15 8 * * *`
 - Backup multiple files/folders by mounting multiple volumes into the data directory

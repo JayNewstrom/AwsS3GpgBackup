@@ -7,6 +7,7 @@ RECIPIENT_FILENAME=${RECIPIENT_FILENAME:-"recipient.asc"}
 FILENAME_PREFIX=${FILENAME_PREFIX:-"backup-"}
 DATE=${DATE:-$(date +\%Y-\%m-\%d)}
 AWS_OPTIONS=${AWS_OPTIONS:-""}
+COMPRESSION_TYPE=${COMPRESSION_TYPE:-"zip"}
 export GNUPGHOME=${GNUPGHOME:-"/app/.gnupg"}
 export AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE:-"/config/.aws/credentials"}
 export AWS_CONFIG_FILE=${AWS_CONFIG_FILE:-"/config/.aws/config"}
@@ -14,10 +15,25 @@ export AWS_CONFIG_FILE=${AWS_CONFIG_FILE:-"/config/.aws/config"}
 # Fail Fast
 set -o errexit
 
-ZIP_FILENAME="$FILENAME_PREFIX$DATE.zip"
+if [ "$COMPRESSION_TYPE" = "zip" ]; then
+  ZIP_FILENAME="$FILENAME_PREFIX$DATE.zip"
+elif [ "$COMPRESSION_TYPE" = "tar.gz" ]; then
+  ZIP_FILENAME="$FILENAME_PREFIX$DATE.tar.gz"
+else
+  echo "COMPRESSION_TYPE not supported."
+  exit 1
+fi
+
 GPG_FILENAME="$ZIP_FILENAME.gpg"
 
-zip -r /zip/"$ZIP_FILENAME" /data/
+if [ "$COMPRESSION_TYPE" = "zip" ]; then
+  zip -r /zip/"$ZIP_FILENAME" /data/
+elif [ "$COMPRESSION_TYPE" = "tar.gz" ]; then
+  tar -czvf /zip/"$ZIP_FILENAME" /data/
+else
+  echo "COMPRESSION_TYPE not supported."
+  exit 1
+fi
 
 gpg --output "/gpg/$GPG_FILENAME" --encrypt --recipient-file "/recipient/$RECIPIENT_FILENAME" "/zip/$ZIP_FILENAME"
 
