@@ -29,7 +29,7 @@ GPG_FILENAME="$ZIP_FILENAME.gpg"
 if [ "$COMPRESSION_TYPE" = "zip" ]; then
   zip -r /zip/"$ZIP_FILENAME" /data/
 elif [ "$COMPRESSION_TYPE" = "tar.gz" ]; then
-  tar -czvf /zip/"$ZIP_FILENAME" /data/
+  tar -pczvf /zip/"$ZIP_FILENAME" /data/
 else
   echo "COMPRESSION_TYPE not supported."
   exit 1

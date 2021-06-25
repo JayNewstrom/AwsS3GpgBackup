@@ -22,7 +22,7 @@ gpg --output "/zip/$ZIP_FILENAME" --decrypt "/gpg/$FILENAME"
 if [ "$COMPRESSION_TYPE" = "zip" ]; then
   unzip "/zip/$ZIP_FILENAME" -d /restore/
 elif [ "$COMPRESSION_TYPE" = "tar.gz" ]; then
-  tar -xzvf "/zip/$ZIP_FILENAME" -C /restore/
+  tar -pxzvf "/zip/$ZIP_FILENAME" -C /restore/
 else
   echo "COMPRESSION_TYPE not supported."
   exit 1
