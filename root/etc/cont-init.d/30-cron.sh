@@ -12,7 +12,8 @@ echo "
 Initializing cron
 $CRON
 "
-crontab -u abc -d # Delete any existing crontab.
+CRON_USER=${CRON_USER:-"abc"}
+crontab -u $CRON_USER -d # Delete any existing crontab.
 echo "$CRON /usr/bin/flock -n /app/backup.lock /app/run.sh" >/tmp/crontab.tmp
-crontab -u abc /tmp/crontab.tmp
+crontab -u $CRON_USER /tmp/crontab.tmp
 rm /tmp/crontab.tmp

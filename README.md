@@ -31,6 +31,7 @@ docker run --restart=always -d --name=backup \
   - `tar.gz`
 - Run via cron by adding an environment variable
   - `CRON=15 8 * * *`
+- Run the cron as an alternate user via `CRON_USER=root`
 - Backup multiple files/folders by mounting multiple volumes into the data directory
   - ```shell script
     docker run --restart=always -d --name=backup \
