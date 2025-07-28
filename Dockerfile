@@ -1,4 +1,4 @@
-FROM crazymax/alpine-s6:3.12
+FROM crazymax/alpine-s6:3.21
 
 RUN apk add --update --no-cache \
         python3 \

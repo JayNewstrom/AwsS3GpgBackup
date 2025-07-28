@@ -62,7 +62,10 @@ docker run --rm -it --name=restore \
 
 ## Build
  - Build for the current architecture only: `docker build -t jaynewstrom/aws-s3-gpg-backup .`
- - Build for multiple architectures: `docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t jaynewstrom/aws-s3-gpg-backup . --push`
+ - Build for multiple architectures: 
+    - `docker buildx create --name multiarch-builder --use`
+    - `docker buildx inspect --bootstrap`
+    - `docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t jaynewstrom/aws-s3-gpg-backup . --push`
 
 ## License
 
