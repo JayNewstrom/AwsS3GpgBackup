@@ -4,7 +4,6 @@ if [[ "$CRON" ]]; then
   crond -l 2 -f
 else
   echo "Skipping cron, all done."
-  s6-svc -d /var/run/s6/services/cron
   exit 0
 fi
 

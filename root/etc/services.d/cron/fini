@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+
+# Kill any running crond processes
+pkill crond || true 

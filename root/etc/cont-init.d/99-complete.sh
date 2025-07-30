@@ -2,5 +2,5 @@
 
 if [ -z "${CRON}" ]; then
   echo "Skipping cron, all done."
-  exit 1
+  exit 0
 fi
